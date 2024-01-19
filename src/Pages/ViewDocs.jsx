@@ -33,8 +33,13 @@ function ViewDocs() {
     };
 
     const handleDelete = async (id) => {
-        console.log("clicked");
-        await deleteDoc(doc(firestore, "docs", id));
+       
+        if (window.confirm("Are you sure to delete the document")) {
+              await deleteDoc(doc(firestore, "docs", id));
+        }else{
+            console.log("Something Went Wrong");
+        }
+        
     }
 
     useEffect(() => {
@@ -53,16 +58,17 @@ function ViewDocs() {
     return (
         <>
         <div><h2 className='p-5 mt-5 fs-1 text-center'>All Notes</h2></div>
-        <div className='d-flex justify-content-evenly' style={{minHeight:"60vh"}}>
+        <div className='row w-100 px-5' style={{minHeight:"60vh"}}>
             {allDocs.length > 0 ? allDocs.map((doc) => (
-                <div className='' key={doc.id} >
+                <div className='col-lg-3 p-5' key={doc.id} >
                     
-                    <Card onClick={() => handleShow(doc.data.name, doc.data.description, doc.id)} style={{ width: '18rem', height: '12rem' }}>                        
+                    <Card style={{ width: '18rem', height: '12rem' }}>                        
                         <Card.Img className='position-absolute' variant="top" src={cardimg} />
                         <Card.Body style={{marginTop:'5px',position:'relative'}}>
                         <h6 style={{margin:'0px 0px 0px 150px'}}>{doc.data.time}</h6>
-                            <Card.Title style={{marginTop:'25px'}}><h2 className='text-center' style={{ color: "black" }}>{doc.data.name}</h2>
-                            </Card.Title>                           
+                            <Card.Title onClick={() => handleShow(doc.data.name, doc.data.description, doc.id)} style={{marginTop:'25px',cursor:'pointer'}}><h2 className='text-center' style={{ color: "black" }}>{doc.data.name}</h2>
+                            </Card.Title> 
+                            <button className='btn' style={{margin:'15px 0px 0px 200px'}} onClick={() => handleDelete(doc.id)}><i className="px-3 fa-solid fa-trash text-danger"></i></button>                          
                         </Card.Body>
                     </Card>
                     </div>                
@@ -75,7 +81,6 @@ function ViewDocs() {
                         <Modal.Title className='text-break'>{title}</Modal.Title>
                         <div>
                             <button className='btn' onClick={() => navigate(userid)}><i class="fa-solid fa-pen"></i></button>
-                            <i onClick={() => handleDelete(doc.id)} className="px-3 mb-2 fa-solid fa-trash text-danger"></i>
                         </div>
                     </div>
                 </Modal.Header>
