@@ -1,0 +1,18 @@
+.ql-container {   
+    min-height: 300px; 
+  }
+  
+  .ql-editor {
+    font-size: 18px;
+    line-height: 1.5;
+    padding: 10px;
+  }
+  
+  .ql-toolbar button.ql-active {
+    background-color: #e1f5fe;
+  }
+   
+  .ql-toolbar button:hover {
+    background-color: #f5f5f5; 
+  }
+  
